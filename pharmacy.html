@@ -1,0 +1,86 @@
+<!-- File: pharmacy.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Dashboard | MediFind</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+    <div class="container nav-wrapper">
+        <a href="index.html" class="brand-logo"><i class="fa-solid fa-store"></i> MediFind <span>Pharmacy Panel</span></a>
+        <div>
+            <a href="index.html" class="btn btn-outline">View Live Storefront</a>
+            <button class="btn btn-danger-outline" onclick="logoutUser()">Logout</button>
+        </div>
+    </div>
+</header>
+
+<main class="container main-content">
+    <div id="pharmHeader" class="card" style="margin-bottom:1.5rem;"></div>
+
+    <div class="checkout-grid">
+        <!-- Add / Update Medicine Inventory -->
+        <div class="card">
+            <h3><i class="fa-solid fa-boxes-stacked"></i> Current Shop Inventory</h3>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Medicine</th><th>Price (₹)</th><th>Stock</th></tr>
+                </thead>
+                <tbody id="pharmInventoryBody"></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3><i class="fa-solid fa-plus-circle"></i> Add / Update Medicine Stock</h3>
+            <form id="addInventoryForm">
+                <div class="form-group">
+                    <label>Select Medicine</label>
+                    <select name="medicine_id" id="catalogSelect" onchange="document.getElementById('newMedFields').style.display = this.value==='0'?'block':'none'"></select>
+                </div>
+                <div id="newMedFields" style="display:none;">
+                    <div class="form-group"><input type="text" name="brand_name" placeholder="Brand Name (e.g. Azithral 500)"></div>
+                    <div class="form-group"><input type="text" name="generic_name" placeholder="Generic Salt (e.g. Azithromycin)"></div>
+                    <div class="form-row">
+                        <input type="text" name="strength" placeholder="Strength (e.g. 500 mg)">
+                        <select name="dosage_form">
+                            <option value="Tablet">Tablet</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Syrup">Syrup</option>
+                            <option value="Injection">Injection</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" name="pack_size" placeholder="Pack Size (e.g. Strip of 5)">
+                        <select name="requires_prescription">
+                            <option value="1">Rx Required</option>
+                            <option value="0">OTC</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <input type="number" step="0.01" name="price" placeholder="Price per Pack (₹) *" required>
+                    <input type="number" name="stock_quantity" placeholder="Stock Quantity *" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Inventory</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Incoming Customer Orders -->
+    <div class="card" style="margin-top:2rem;">
+        <h3><i class="fa-solid fa-clipboard-list"></i> Customer Medicine Orders & Prescriptions</h3>
+        <table class="data-table">
+            <thead>
+                <tr><th>Order #</th><th>Customer</th><th>Total</th><th>Prescription</th><th>Status</th><th>Update Status</th></tr>
+            </thead>
+            <tbody id="pharmOrdersBody"></tbody>
+        </table>
+    </div>
+</main>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

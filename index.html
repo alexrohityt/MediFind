@@ -1,0 +1,134 @@
+<!-- File: index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediFind – Medicine Finder & Home Delivery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container nav-wrapper">
+        <a href="index.html" class="brand-logo"><i class="fa-solid fa-staff-snake"></i> Medi<span>Find</span></a>
+        <nav class="main-nav">
+            <a href="#search-section">Find Medicine</a>
+            <a href="#track-section">Track Order</a>
+            <button class="btn btn-outline" onclick="toggleCartModal()">
+                <i class="fa-solid fa-cart-shopping"></i> Cart (<span id="cartCount">0</span>)
+            </button>
+            <span id="authNavArea">
+                <a href="login.html" class="btn btn-primary">Login / Register</a>
+            </span>
+        </nav>
+    </div>
+</header>
+
+<main class="container main-content">
+    <div id="alertBox"></div>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <span class="pill-badge"><i class="fa-solid fa-circle-check"></i> Verified Local Medical Stores</span>
+        <h1>Find Prescribed Medicines Instantly Near You</h1>
+        <p class="hero-tagline">
+            "Can't find your prescribed medicine? Search nearby medical shops, compare prices, and get your medicine delivered to your doorstep."
+        </p>
+
+        <form id="searchForm" class="search-box-form">
+            <div class="input-group">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchQuery" placeholder="Search medicine brand, generic salt, 650 mg, tablet...">
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-location-dot"></i>
+                <input type="text" id="searchLocation" placeholder="City, Area or PIN (e.g. 400001)">
+                <button type="button" class="gps-btn" id="gpsBtn"><i class="fa-solid fa-location-crosshairs"></i> Near Me</button>
+            </div>
+            <select id="searchSort" class="sort-select">
+                <option value="price_asc">Sort: Lowest Price</option>
+                <option value="stock_desc">Sort: Highest Stock</option>
+                <option value="delivery_asc">Sort: Fastest Delivery</option>
+            </select>
+            <button type="submit" class="btn btn-primary btn-lg">Search Stock</button>
+        </form>
+        <div id="gpsStatus" style="margin-top:8px; font-size:0.9rem;"></div>
+    </section>
+
+    <!-- Quick Categories -->
+    <section class="section">
+        <div class="category-grid">
+            <button class="category-card" type="button" data-category="Antibiotics" aria-pressed="false" onclick="quickFilter('Antibiotics')"><i class="fa-solid fa-capsules"></i> Antibiotics</button>
+            <button class="category-card" type="button" data-category="Fever &amp; Pain" aria-pressed="false" onclick="quickFilter('Fever & Pain')"><i class="fa-solid fa-temperature-half"></i> Fever & Pain</button>
+            <button class="category-card" type="button" data-category="Diabetes Care" aria-pressed="false" onclick="quickFilter('Diabetes Care')"><i class="fa-solid fa-droplet"></i> Diabetes Care</button>
+            <button class="category-card" type="button" data-category="Cardiac Care" aria-pressed="false" onclick="quickFilter('Cardiac Care')"><i class="fa-solid fa-heart-pulse"></i> Cardiac Care</button>
+        </div>
+    </section>
+
+    <!-- Live Medicine Results Section -->
+    <section class="section" id="search-section">
+        <h2 class="section-title">Available Pharmacy Stock</h2>
+        <div id="resultsContainer" class="cards-grid"></div>
+    </section>
+
+    <!-- Real-Time Order Tracker Section -->
+    <section class="section card" id="track-section">
+        <h2><i class="fa-solid fa-truck-fast"></i> Track Your Medicine Order</h2>
+        <form id="trackOrderForm" class="search-filter-bar">
+            <input type="text" id="trackOrderInput" placeholder="Enter Unique Order ID (e.g. MF-20261025-XXXXXX)" required>
+            <button type="submit" class="btn btn-primary">Track Status</button>
+        </form>
+        <div id="trackResultBox"></div>
+    </section>
+</main>
+
+<!-- Shopping Cart & Checkout Modal -->
+<div id="cartModal" class="modal-overlay" style="display:none;">
+    <div class="modal-card">
+        <div class="card-header-row">
+            <h2><i class="fa-solid fa-cart-shopping"></i> Your Medicine Cart & Checkout</h2>
+            <button class="btn btn-danger-outline btn-sm" onclick="toggleCartModal()">✕ Close</button>
+        </div>
+        <div id="cartItemsContainer"></div>
+
+        <form id="checkoutForm" enctype="multipart/form-data" style="margin-top:1rem; display:none;">
+            <hr style="margin:1rem 0;">
+            <h3>Delivery Details & Prescription</h3>
+            <div class="form-row">
+                <input type="text" name="recipient_name" placeholder="Recipient Full Name *" required>
+                <input type="text" name="phone" placeholder="10-Digit Mobile Number *" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="street_address" placeholder="Flat / House No. / Street / Landmark *" required>
+            </div>
+            <div class="form-row">
+                <input type="text" name="city" value="Mumbai" placeholder="City *" required>
+                <input type="text" name="pincode" value="400001" placeholder="PIN Code *" required>
+            </div>
+            <div class="form-group" id="rxUploadBox">
+                <label><i class="fa-solid fa-file-prescription"></i> Upload Doctor's Prescription (Required for Rx items - JPG/PNG/PDF)</label>
+                <input type="file" name="prescription_file" accept=".jpg,.jpeg,.png,.pdf">
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select name="payment_method">
+                    <option value="COD">Cash on Delivery (COD)</option>
+                    <option value="Online">Online Payment (UPI / Card)</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">Confirm & Place Order</button>
+        </form>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="container footer-bottom">
+        &copy; 2026 MediFind – Medicine Finder & Home Delivery. Built with HTML5, CSS3, Vanilla JS, PHP & MySQL.
+    </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!-- File: admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | MediFind</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+    <div class="container nav-wrapper">
+        <a href="index.html" class="brand-logo"><i class="fa-solid fa-shield-halved"></i> MediFind <span>Admin</span></a>
+        <button class="btn btn-danger-outline" onclick="logoutUser()">Logout</button>
+    </div>
+</header>
+
+<main class="container main-content">
+    <div class="stats-grid" id="adminStatsGrid"></div>
+
+    <div class="card" style="margin-top:2rem;">
+        <h3>Pharmacy Verification & License Approval</h3>
+        <table class="data-table">
+            <thead>
+                <tr><th>Pharmacy Name</th><th>License #</th><th>City / PIN</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody id="adminPharmaciesBody"></tbody>
+        </table>
+    </div>
+
+    <div class="card" style="margin-top:2rem;">
+        <h3>Customer Unmet Medicine Availability Requests</h3>
+        <table class="data-table">
+            <thead>
+                <tr><th>Customer</th><th>Phone</th><th>Requested Medicine</th><th>PIN Code</th><th>Date</th></tr>
+            </thead>
+            <tbody id="adminRequestsBody"></tbody>
+        </table>
+    </div>
+</main>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!-- File: login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register | MediFind</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+    <div class="container nav-wrapper">
+        <a href="index.html" class="brand-logo"><i class="fa-solid fa-staff-snake"></i> Medi<span>Find</span></a>
+        <a href="index.html" class="btn btn-outline">← Back to Medicine Search</a>
+    </div>
+</header>
+
+<main class="container main-content">
+    <div id="authAlert"></div>
+    <div class="checkout-grid">
+        <!-- Login Card -->
+        <div class="card">
+            <h2>Login to MediFind</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login Securely</button>
+            </form>
+        </div>
+
+        <!-- Registration Card -->
+        <div class="card">
+            <h2>Create New Account</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>Register As</label>
+                    <select name="role" id="regRole" onchange="document.getElementById('pharmExtra').style.display = this.value==='pharmacy' ? 'block' : 'none'">
+                        <option value="customer">Customer / Patient</option>
+                        <option value="pharmacy">Medical Shop Owner / Pharmacist</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="full_name" placeholder="Full Name *" required>
+                </div>
+                <div class="form-row">
+                    <input type="email" name="email" placeholder="Email Address *" required>
+                    <input type="text" name="phone" placeholder="Mobile Number *" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Create Password (min 6 chars) *" required>
+                </div>
+
+                <div id="pharmExtra" style="display:none; border-top:1px solid #e2e8f0; padding-top:1rem;">
+                    <h4>Pharmacy Verification Details</h4>
+                    <div class="form-group"><input type="text" name="pharmacy_name" placeholder="Medical Shop Name"></div>
+                    <div class="form-group"><input type="text" name="license_number" placeholder="Drug License Number (e.g. DL-MUM-2026-1122)"></div>
+                    <div class="form-group"><input type="text" name="address" placeholder="Shop Street Address"></div>
+                    <div class="form-row">
+                        <input type="text" name="city" placeholder="City">
+                        <input type="text" name="pincode" placeholder="PIN Code">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline btn-block">Register Account</button>
+            </form>
+        </div>
+    </div>
+</main>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
